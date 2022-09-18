@@ -1,44 +1,42 @@
-Sao đây là hướng dẫn cách mà bạn sẽ tạo ra 1 con server LEMP trên AWS chạy dự án Laravel có cấu hình như sau: 
-+ OS Amazon Linux: Centos 7, WebService: Apache, PHP8, DB: MariaDB
+Sao đây là hướng dẫn cách mà bạn sẽ tạo ra 1 con server LAMP (Linux, Apache, MariaDB, PHP) trên AWS chạy dự án Laravel có cấu hình như sau: 
++ OS Amazon Linux 2, WebService: Apache, PHP8, DB: MariaDB
 
 * Apache:  Là một máy chủ proxy mã nguồn mở (open source reverse proxy server) sử dụng phổ biến giao thức HTTP, HTTPS, SMTP, POP3 và IMAP. Cũng như dùng làm cân bằng tải(load balancer), HTTP casche và máy chủ web server.
 
-
-Đầu tiên chúng ta cần có tài khoản AWS 
-
+Đầu tiên chúng ta cần có tài khoản AWS và tạo EC2 ở bài trước [](). Sau đó các bạn SSH vào server.
 
 # 1. Cài đặt PHP
 
-Confirm that the amazon-linux-extras package is installed:
+Kiểm tra ``amazon-linux-extras`` đã được cài đặt chưa?:
 ```
 $ which amazon-linux-extras
 /usr/bin/amazon-linux-extras
 ```
-If the command doesn’t return any output, then install the package that will configure the repository:
+Nếu câu lệnh trên không trả hay in ra kêt quả nào, thì chúng ta sẽ cài đặt lại nó bằng cách: 
 
 ```
 sudo yum install -y amazon-linux-extras
 ```
+Sau khi xong, chúng ta sẽ kiểm tra PHP có tồn tại và khả dựng ở Amazone Linux 2 không, thông thường thì nó sẽ chứa PHP cho các bạn trước: 
 
-Let’s confirm that PHP 7.x topic is available in our Amazon Linux 2 machine:
 ```
 $ sudo  amazon-linux-extras | grep php
  42  php7.4                   available    [ =stable ]
  51  php8.0                   available    [ =stable ]
  ```
-As we can see all PHP topics, in this example we’ll enable php8.0 topic.
+
+ Như chúng ta thấy đây là tất cả version package của PHP, và chúng ta sẽ anable PHP8.0 lên:
 
 ```
 sudo amazon-linux-extras enable php8.0
 ```
-Now install PHP packages from the repository, include pear, mysqllnd,json....
+Bây giờ hãy cài đặt những package cần thiết cho PHP như pear, mysqllnd,json....
 
 ```
 sudo yum clean metadata
 sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}
 ```
-
-Check default PHP version:
+Kiểm tra version của PHP xem đã cài đặt thành công chưa
 
 ```
 [ec2-user@ip-172-31-10-22 ~]$ php -v
@@ -46,15 +44,14 @@ PHP 8.0.20 (cli) (built: Jun 23 2022 20:34:07) ( NTS )
 Copyright (c) The PHP Group
 Zend Engine v4.0.20, Copyright (c) Zend Technologies
 ```
-
-Bisdie, To install PHP 7.4, make sure you disable 8.0 then enable 7.4.
+Ngoài ra, nếu các bạn muốn cài đặt PHP version khác, ví dụ 7.4 thì hay disable PHP version 8.0 và enable PHP version 7.4 sau đó cài đặt là xong:
 
 ```
 sudo amazon-linux-extras disable php8.0
 sudo amazon-linux-extras enable php7.4
 sudo yum install php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip,imap}
 ```
-Confirm version of PHP.
+Kiểm tra version xem đã đổi thành công chưa.
 ```
 [ec2-user@ip-172-31-10-22 ~]$ php -v
 PHP 7.4.31 (cli) (built: Jul  2 2020 23:17:00) ( NTS )
@@ -89,7 +86,35 @@ Chúng ta có thể kiểm tra trạng thái của **httpd**
 enabled
 ```
 
-## 2.5 Cấu hình cho httpd
+## 2.5 Thiết lập quyền người dùng 
+1. Thêm người dùng (trường hợp này là dành cho ec2-user) vào group apache
+```
+sudo usermod -a -G apache ec2-user
+```
+2. Thoát ra và login SSH lại vào server để xác thực người dùng cho group mới
+a. Ngắt kết nói để thoát ra
+```
+[ec2-user ~]$ exit
+```
+b. Chạy câu lệnh kiểm tra các groups hiện có 
+```
+[ec2-user ~]$ groups
+ec2-user adm wheel apache systemd-journal
+```
+3. Thay đổi cấp quyền thư mục cho ec2-user:apache 
+```
+[ec2-user ~]$ sudo chown -R ec2-user:apache /var/www
+```
+4. Để thêm quyền ghi group và đặt ID nhóm trên các thư mục con trong tương lai, hãy thay đổi quyền thư mục của / var / www và các thư mục con của nó.
+```
+[ec2-user ~]$ sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
+```
+5. Để thêm quyền ghi nhóm, hãy thay đổi đệ quy quyền truy cập tệp của / var / www và các thư mục con của nó:
+```
+[ec2-user ~]$ find /var/www -type f -exec sudo chmod 0664 {} \;
+```
+
+## 2.6 Cấu hình cho httpd
 File cấu hình mặc định của Apache sẽ nằm ở ``/etc/httpd/conf/httpd.conf``. Chúng ta hạn chế động vào file này, khi chúng ta muốn cấu hình cho một website hay nhiều website thì chúng ta nên tạo ra 1 file conf riêng trong thư mục ``/etc/httpd/conf.d/*.conf``. Việc config mình sẽ có bài viết riêng, còn hiện tại chúng ta sẽ để cấu hình mặc định.   
 ** Lưu ý: Mỗi lần thay đổi cấu hình thì chúng ta phải gọi lệnh restart apache để nó có thể lấy được cấu hình mới chúng ta vừa sửa hoặc thêm
 ```
@@ -178,6 +203,7 @@ Chúng ta truy cập vào đường dẫn chưa web (mặc định là /var/www/
 ```
 cd /var/www/html
 ```
+_**Lưu ý**_: Khi clone xong sẽ xuất hiện 1 thư mục x_name_project chứa source chính của bạn, các bạn cần thiết lập lại cấu hình Virtual Host của Apache để nó có thể biết nên run file index.php ở trong /var/www/html/x_name_project/public. 
 Sau đó dùng git cmd để clone dự án source về
 
 ```
