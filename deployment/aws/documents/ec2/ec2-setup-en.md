@@ -35,7 +35,7 @@ Type in the EC2 search bar or select EC2 to enter the dashboard. This will show 
 
 ## 1. In order of settings including:
 ### 1.1 Name the EC2 instance
-### 1.2 Select AMI (Amazon Machine Image), it is understood almost like the OS we want to create, it is a pre-configured version we just need to take out and use. For those of you who are new or just create aws for learning purposes and use it sparingly, you should choose the items with ``_Free tier_`` to get free.
+### 1.2 Select AMI (Amazon Machine Image), it is understood almost like the OS we want to create, it is a pre-configured version we just need to take out and use. For those of you who are new or just create aws for learning purposes and use it sparingly, you should choose the items with ``Free tier`` to get free.
 Here I will choose AWS linux 2
 ### 1.3 Instance type
 This item is to determine the hardware configuration for our server, about CPU, Ram, just choose ``Free tier``.
@@ -53,11 +53,32 @@ I will keep the default to allow SSH.
 ### 1.6 Storage
 This section specifies archiving options for the instance. allocate storage for our instances. Here AWS EC2 allows up to 30GB for free. Depending on your needs, you choose the GB you want and don't exceed 30GB to get FREE
 
-So we have created a VPS server on AWS called EC2. Now I will guide you to connect to the server in 2 ways
-C1. Is ssh using the computer's cmd
-C2. Using Centos 8 software
+### 2. Connect with Server EC2 Instance
+So we have created a VPS server on AWS called EC2. Now I will guide you to connect to the server in 2 ways  
+1. Is ssh using the computer's cmd
+2. Using Centos 8 software
 
 #### Connect use cmd
-- In EC2 instance you created, click connect will show you way how connect with EC2 instance via SSH
-. Open an SSH client (cmd in windows, terminal in macOs or Zoc8).
-. Locate your private key, which you download in **1.4 Key pair** above
+- In EC2 instance you created, click connect will show you way how connect with EC2 instance via SSH  
+* Open an SSH client (cmd in windows, terminal in macOs or Zoc8).   
+* Locate your private key, which you download in **1.4 Key pair** above   
+* Run this command, if necessary, to ensure your key is not publicly viewable.   
+    ```
+    chmod 400 name_file.pem
+    ```
+* Connect to your instance using its Public DNS:   
+**Example**:  
+```
+goldenowl@Edric-Mac key % ssh -i "edric-php-lad.cer" ec2-user@ec2-18-138-225-101.ap-southeast-1.compute.amazonaws.com
+Last login: Mon Sep 26 02:39:05 2022 from 27.74.244.188
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+No packages needed for security; 2 packages available
+Run "sudo yum update" to apply all updates.
+[ec2-user@ip-172-31-10-22 ~]$ 
+````
+This is template when you connected success.
