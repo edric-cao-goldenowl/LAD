@@ -177,7 +177,7 @@ Now that MariaDB has been installed, you can access cmd to check the DB or insta
 ## 4.4 Create a new DB with a project
 
 ... 
-#5. Deploy PHP (Laravel) Project
+# 5. Deploy PHP (Laravel) Project
 Deploying PHP Laravel projects can be deployed manually, but I should prioritize using git for convenience and speed.
 ## 5.1 Install git
 Still using simple cmd
