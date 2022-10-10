@@ -1,4 +1,4 @@
-Why here is a guide on how you will create a LEMP server on AWS running a Laravel project with the following configuration:
+Here is a guide on how you will create a LEMP server on AWS running a Laravel project with the following configuration:
 + Amazon Linux OS: Centos 7, WebService: Apache, PHP8, DB: MariaDB
 
 * Apache: Is an open source reverse proxy server that uses popular HTTP, HTTPS, SMTP, POP3 and IMAP protocols. Also used as load balancer, HTTP cache and web server.
