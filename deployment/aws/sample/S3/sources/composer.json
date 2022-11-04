@@ -1,0 +1,17 @@
+{
+    "name": "goldenowl/sources",
+    "autoload": {
+        "psr-4": {
+            "Goldenowl\\Sources\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Edric Cao",
+            "email": "edric.cao.goldenowl@gmail.com"
+        }
+    ],
+    "require": {
+        "aws/aws-sdk-php": "^3.240"
+    }
+}
