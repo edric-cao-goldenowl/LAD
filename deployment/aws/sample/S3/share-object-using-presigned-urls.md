@@ -8,8 +8,30 @@ Anyone who receives the presigned URL can then access the object. For example, i
 # Generating a presigned URL to share an object
 You can generate a presigned URL for an object without writing any code by using the S3 console or AWS Explorer for Visual Studio. You can also generate a presigned URL programmatically using the AWS SDKs for Java, .NET, Ruby, PHP, Node.js, Python, and Go.
 
-In the document, i will SDK for PHP version 3 to generate a presigned URL to share an Object in S3.
+In the document, i will introduce you generate presigned URL without writing any code by using the S3 console and use SDK for PHP version 3 to generate a presigned URL to share an Object in S3.
+# Using the S3 console
+You can use the AWS Management Console to generate a presigned URL for an object by following these steps.
 
+> **Note**
+In the Amazon S3 console, the maximum expiration time for a presigned URL is 12 hours from the time of creation.
+
+**To generate a presigned URL using the AWS Management Console**
+
+1. Sign in to the AWS Management Console and open the Amazon S3 console at https://console.aws.amazon.com/s3/.
+
+2. In the Buckets list, choose the name of the bucket that contains the object that you want a presigned URL for.
+
+3. In the Objects list, select the object that you want to create a presigned URL for.
+
+4. On the Actions menu, choose Share with a presigned URL.
+
+5. Specify how long you want the presigned URL to be valid.
+
+6. Choose Create presigned URL.
+
+7. When a confirmation appears, the URL is automatically copied to your clipboard. You will see a button to copy the presigned URL if you need to copy it again.
+
+# Using the PHP AWS SDKs
 ## Credentials
 Before running the example code, configure your AWS credentials.
 To make requests to Amazon Web Services, supply AWS access keys, also known as credentials, to the AWS SDK for PHP.
