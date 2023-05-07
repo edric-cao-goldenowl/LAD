@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/aws" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/aws/aws-crt-php/crt" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/guzzlehttp" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/mtdowling" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/psr" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/ralouphie" />
+      <excludeFolder url="file://$MODULE_DIR$/deployment/aws/sample/S3/sources/vendor/symfony" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
